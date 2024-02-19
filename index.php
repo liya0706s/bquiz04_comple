@@ -23,7 +23,11 @@
                 <a href="?">回首頁</a> |
                 <a href="?do=news">最新消息</a> |
                 <a href="?do=look">購物流程</a> |
-                <a href="?do=buycart">購物車</a> |
+                <a href="?do=buycart">購物車(
+                    <span id="amount">
+                    <!-- 單獨判斷也這個變數且大於零，就echo購物車的數量，不然就是0 -->
+
+                    0</span>)</a> |
 
                 <?php
                 // 如果有是使用者
@@ -62,7 +66,7 @@
                 ?>
                     <div class="ww">
                         <!-- 大分類名稱和他的數量 -->
-                        <a href="?type=<?=$big['id']; ?>"><?= $big['name']; ?>(<?= $Goods->count(['sh' => 1, 'big' => $big['id']]); ?>)</a>
+                        <a href="?type=<?= $big['id']; ?>"><?= $big['name']; ?>(<?= $Goods->count(['sh' => 1, 'big' => $big['id']]); ?>)</a>
                         <div class="s">
                             <!-- 判斷這個大分類中有沒有中分類 -->
                             <?php
