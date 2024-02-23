@@ -17,12 +17,17 @@
         <td class="pp">
             <?php
             // 兩位數的亂數區間
-            $a = rand(10, 99);
-            $b = rand(10, 99);
+            // $a = rand(10, 99);
+            // $b = rand(10, 99);
             // SESSION比一般變數長久存在伺服器端，客戶看不到
-            $_SESSION['ans'] = $a + $b;
-            echo $a . " + " . $b . " =";
+            // $_SESSION['ans'] = $a + $b;
+            // echo $a . " + " . $b . " =";
+
+            // 圖形驗證碼:
+            $_SESSION['ans']=code(5);
+            $img=captcha($_SESSION['ans']);
             ?>
+            <img src="<?=$img;?>" alt="">
             <input type="text" name="ans" id="ans">
         </td>
     </tr>
