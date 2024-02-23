@@ -24,11 +24,13 @@
             // echo $a . " + " . $b . " =";
 
             // 圖形驗證碼:
-            $_SESSION['ans']=code(5);
-            $img=captcha($_SESSION['ans']);
+            // $_SESSION['ans']=code(5);
+            // $img=captcha($_SESSION['ans']);
+            // 
             ?>
-            <img src="<?=$img;?>" alt="">
-            <input type="text" name="ans" id="ans">
+            <input type="text" name="ans" id="ans"><br>
+            <img src="" id="captcha">
+            <button onclick="captcha()">重新產生</button>
         </td>
     </tr>
 </table>
@@ -37,6 +39,16 @@
 </div>
 
 <script>
+    captcha();
+
+    function captcha() {
+        $.get("./api/captcha.php", (img) => {
+            console.log(img);
+            $("#captcha").attr("src", img)
+        })
+    }
+
+
     // 定義一個名為 login 的函數，它接受一個參數：table (mem和admin)
     function login(table) {
         // 發送一個 GET 請求到 './api/chk_ans.php' 確認驗證碼

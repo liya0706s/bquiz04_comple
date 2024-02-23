@@ -3,17 +3,16 @@ date_default_timezone_set("Asia/Taipei");
 session_start();
 class DB
 {
+
     protected $dsn = "mysql:host=localhost;charset=utf8;dbname=db03";
-    // db+抽到的崗位號碼
-    // protected $dsn = "mysql:host=localhost;charset=utf8;dbname=bquiz"; //資料庫
     protected $pdo;
     protected $table;
 
     public function __construct($table)
     {
         $this->table = $table;
+        //$this->pdo=new PDO($this->dsn,'s1120401','s1120401');
         $this->pdo = new PDO($this->dsn, 'root', '');
-        // $this->pdo=new PDO($this->dsn,'s1120409','s1120409');
     }
 
 
@@ -21,17 +20,14 @@ class DB
     {
         $sql = "select * from `$this->table` ";
         $sql = $this->sql_all($sql, $where, $other);
-        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return  $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
-    // all 方法用於從資料表中 擷取所有資料。
-    // 它接受兩個可選參數 $where 和 $other，分別用於指定查詢的條件和其他條件。
-    // 最後，使用 PDO 連線執行 SQL 查詢，並返回結果集。
 
     function count($where = '', $other = '')
     {
         $sql = "select count(*) from `$this->table` ";
         $sql = $this->sql_all($sql, $where, $other);
-        return $this->pdo->query($sql)->fetchColumn();
+        return  $this->pdo->query($sql)->fetchColumn();
     }
     private function math($math, $col, $array = '', $other = '')
     {
@@ -41,15 +37,15 @@ class DB
     }
     function sum($col = '', $where = '', $other = '')
     {
-        return $this->math('sum', $col, $where, $other);
+        return  $this->math('sum', $col, $where, $other);
     }
     function max($col, $where = '', $other = '')
     {
-        return $this->math('max', $col, $where, $other);
+        return  $this->math('max', $col, $where, $other);
     }
     function min($col, $where = '', $other = '')
     {
-        return $this->math('min', $col, $where, $other);
+        return  $this->math('min', $col, $where, $other);
     }
 
     function find($id)
@@ -67,11 +63,9 @@ class DB
         return $row;
     }
 
-    // update or insert
     function save($array)
     {
         if (isset($array['id'])) {
-            // $array = array('id' => 123, 'column1' => 'value1', 'column2' => 'value2');
             $sql = "update `$this->table` set ";
 
             if (!empty($array)) {
@@ -81,7 +75,6 @@ class DB
             $sql .= join(",", $tmp);
             $sql .= " where `id`='{$array['id']}'";
         } else {
-            // $array = array('column1' => 'value1', 'column2' => 'value2');
             $sql = "insert into `$this->table` ";
             $cols = "(`" . join("`,`", array_keys($array)) . "`)";
             $vals = "('" . join("','", $array) . "')";
@@ -123,8 +116,6 @@ class DB
         return $tmp;
     }
 
-    // sql_all 方法是一個私有方法，它被各個方法內部調用，用於組合 SQL 查詢語句。
-    // 這個方法檢查資料表是否被設定且不是空的，然後根據條件和其他條件構建 SQL 語句。
     private function sql_all($sql, $array, $other)
     {
 
@@ -154,13 +145,11 @@ function dd($array)
     print_r($array);
     echo "</pre>";
 }
-
 function to($url)
 {
     header("location:$url");
 }
 
-// 圖形驗證碼 開始
 function code(...$length)
 {
 
@@ -336,11 +325,10 @@ function captcha($str)
     //前方的data:image/png:base64, 是資料格式的宣告,讓瀏灠器可以知道這一段文字的功能是什麼
     return "data:image/png;base64," . base64_encode($output);
 }
-// 圖形驗證碼 結束
 
 $Bottom = new DB('bottom');
 $Mem = new DB('mem');
 $Admin = new DB('admin');
 $Type = new DB('type');
 $Goods = new DB('goods');
-$Orders = new DB('orders');
+$Order = new DB('orders');
